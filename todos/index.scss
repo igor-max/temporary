@@ -1,0 +1,123 @@
+$theme-color: #008c8c;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.todos {
+  .title {
+    padding: 50px 0 20px;
+    text-align: center;
+    font-size: 24px;
+    color: $theme-color;
+  }
+
+  .container {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid $theme-color;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .header {
+    position: relative;
+    height: 50px;
+    border-bottom: 1px solid $theme-color;
+
+    .input {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      padding-left: 50px;
+      height: 100%;
+      border: none;
+      outline: none;
+    }
+
+    .dot {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .main {
+    height: calc(100% - 50px - 50px);
+    overflow-y: scroll;
+  }
+
+  .todo_item {
+    position: relative;
+    height: 40px;
+    list-style: none;
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+
+    .no_edit {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 15px;
+      .text {
+        margin-left: 15px;
+      }
+  
+      .remove {
+        margin-left: auto;
+        cursor: pointer;
+      }
+    }
+
+    .edit_input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+    }
+  }
+
+  .footer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid $theme-color;
+    display: flex;
+
+    &_item {
+      margin-left: 20px;
+      cursor: pointer;
+      color: #999;
+
+      &.active {
+        font-weight: 700;
+        color: $theme-color;
+      }
+
+      &.clear {
+        color: orange
+      }
+    }
+  }
+
+  .dot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+
+    &.active {
+      background-color: $theme-color
+    }
+  }
+
+}
