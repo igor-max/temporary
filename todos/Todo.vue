@@ -48,6 +48,7 @@ export default {
     changeTodo() {
       this.edit = true;
       console.log(this.$refs.input);
+      // 这里不用 $nextTick 聚焦不了,不知道为什么
       this.$nextTick(() => {
         this.$refs.input.focus();
       });
