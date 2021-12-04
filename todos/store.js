@@ -1,132 +1,7 @@
-// import Vue from 'vue'
-// import Vuex from './MyVuex/index';
-
-// Vue.use(Vuex)
-
-// export default new Vuex.Store({
-//   state: {
-//     count: 1
-//   },
-//   mutations: {
-//     SET_COUNT(state) {
-//       state.count += 2;
-//     }
-//   },
-//   getters: {
-//     getCount(state) {
-//       return state.count + 'lalala';
-//     }
-//   },
-//   actions: {
-//     setCount({ commit }) {
-//       commit('SET_COUNT');
-//     }
-//   },
-//   modules: {
-//     a: {
-//       namespaced: true,
-//       state: {
-//         count: 'a'
-//       },
-//       mutations: {
-//         SET_COUNT(state) {
-//           state.count += 2;
-//         }
-//       },
-//       getters: {
-//         getCount(state) {
-//           return state.count + 'lalala';
-//         }
-//       },
-//       actions: {
-//         setCount1({ commit }) {
-//           commit('SET_COUNT');
-//         }
-//       },
-//       modules: {
-//         aa: {
-//           namespaced: true,
-//           state: {
-//             count: 'aa'
-//           },
-//           mutations: {
-//             SET_COUNT(state) {
-//               state.count += 2;
-//             }
-//           },
-//           getters: {
-//             getCount(state) {
-//               return state.count + 'lalala';
-//             }
-//           },
-//           actions: {
-//             setCount2({ commit }) {
-//               commit('SET_COUNT');
-//             }
-//           },
-//           modules: {
-//             aaa: {
-//               namespaced: true,
-//               state: {
-//                 count: 'aaa'
-//               },
-//               mutations: {
-//                 SET_COUNT(state) {
-//                   state.count += 2;
-//                 }
-//               },
-//               getters: {
-//                 getCount(state) {
-//                   return state.count + 'lalala';
-//                 }
-//               },
-//               actions: {
-//                 setCount3({ commit }) {
-//                   commit('SET_COUNT');
-//                 }
-//               },
-//               modules: {
-//                 aaaa: {
-//                   namespaced: true,
-//                   state: {
-//                     count: 'aaaa'
-//                   },
-//                   mutations: {
-//                     SET_COUNT(state) {
-//                       state.count += 2;
-//                     }
-//                   },
-//                   getters: {
-//                     getCount(state) {
-//                       return state.count + 'lalala';
-//                     }
-//                   },
-//                   actions: {
-//                     setCount4({ commit }) {
-//                       commit('SET_COUNT');
-//                     }
-//                   },
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-//     },
-//     // b: {
-//     //   state: {}
-//     // }
-//   }
-// })
-
-
-
-
-
-
-
 import Vue from 'vue'
 import Vuex from 'vuex';
+import { v4 as uuidv4 } from 'uuid';
+
 
 Vue.use(Vuex)
 
@@ -140,29 +15,27 @@ export default new Vuex.Store({
     ADD_TODO(state, text) {
       state.todos.push({
         text,
-        done: false
+        done: false,
+        id: uuidv4()
       });
     },
-    REMOVE_TODO(state, index) {
+    REMOVE_TODO(state, id) {
+      const index = state.todos.findIndex(v => v.id === id);
       state.todos.splice(index, 1);
     },
     REMOVE_FINISH_TODO(state) {
       state.todos = state.todos.filter(v => v.done === false);
     },
-    TOGGLE_TODO_STATUS(state, index) {
+    TOGGLE_TODO_STATUS(state, id) {
+      const index = state.todos.findIndex(v => v.id === id);
       state.todos[index].done = !state.todos[index].done;
     },
     TOGGLE_ALL_TODO_STATUS(state, status) {
       state.todos.forEach(todo => todo.done = status);
     },
-    EDIT_TODO(state, { index, text }) {
+    EDIT_TODO(state, { id, text }) {
+      const index = state.todos.findIndex(v => v.id === id);
       state.todos[index].text = text;
     }
-  },
-  getters: {
-    
-  },
-  actions: {
-  
   }
 })

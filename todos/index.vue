@@ -19,18 +19,17 @@
       <section class="main">
         <ul>
           <TodoItem
-            v-for="(todo, index) in filterTodos"
-            :key="index"
+            v-for="(todo) in filterTodos"
+            :key="todo.id"
             :todo="todo"
-            :index="index"
           />
         </ul>
       </section>
       <footer class="footer">
         <span class="footer_item">{{ activeTodos.length }}items</span>
         <span
-          v-for="(item, index) in ['all', 'active', 'finish']"
-          :key="index"
+          v-for="(item) in ['all', 'active', 'finish']"
+          :key="item"
           class="footer_item"
           :class="{ active: item === type }"
           @click="type = item"
@@ -65,15 +64,12 @@ export default {
       }
       e.target.value = "";
     },
-
     removeFinishTodo() {
       this.$store.commit("REMOVE_FINISH_TODO");
     },
-
     toggleAllTodoStatus() {
       this.$store.commit("TOGGLE_ALL_TODO_STATUS", !this.allCheck);
     },
-    editTodo() {},
   },
   computed: {
     todos() {

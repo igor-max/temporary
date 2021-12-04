@@ -4,10 +4,10 @@
       <span
         class="dot"
         :class="{ active: todo.done }"
-        @click="toggleTodoStatus(index)"
+        @click="toggleTodoStatus"
       ></span>
       <span class="text" @dblclick="changeTodo">{{ todo.text }}</span>
-      <span class="remove" @click="removeTodo(todo, index)">xxx</span>
+      <span class="remove" @click="removeTodo">xxx</span>
     </div>
     <input
       ref="input"
@@ -15,8 +15,8 @@
       v-show="edit"
       type="text"
       :value='todo.text'
-      @blur="editTodo($event, index)"
-      @keyup.enter="editTodo($event, index)"
+      @blur="editTodo"
+      @keyup.enter="editTodo"
     />
     <!-- 这里我们用vuex修改数据,所以不用 v-model='todo.value' -->
   </li>
@@ -26,7 +26,6 @@
 export default {
   props: {
     todo: Object,
-    index: Number,
   },
   data() {
     return {
@@ -34,21 +33,23 @@ export default {
     };
   },
   methods: {
-    removeTodo(todo, index) {
-      this.$store.commit("REMOVE_TODO", index);
+    removeTodo() {
+      this.$store.commit("REMOVE_TODO", this.todo.id);
     },
-    toggleTodoStatus(index) {
-      this.$store.commit("TOGGLE_TODO_STATUS", index);
+    toggleTodoStatus() {
+      this.$store.commit("TOGGLE_TODO_STATUS", this.todo.id);
     },
-    editTodo(e, index) {
+    editTodo(e) {
       const text = e.target.value;
-      this.$store.commit("EDIT_TODO", { text, index });
+      this.$store.commit("EDIT_TODO", {
+        id: this.todo.id,
+        text
+      });
       this.edit = false;
     },
     changeTodo() {
       this.edit = true;
-      console.log(this.$refs.input);
-      // 这里不用 $nextTick 聚焦不了,不知道为什么
+      // 这里为什么要用 $nextTick 才能聚焦的了
       this.$nextTick(() => {
         this.$refs.input.focus();
       });
