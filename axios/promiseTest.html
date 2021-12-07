@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 该promise是请求拦截器最终返回的结果
+    const config = {
+      headers: {},
+    };
+    // then 中的config是 dispatchRequest 对 config 进行处理后的config
+    let response = Promise.resolve(config).then(function dispatchRequest(config) {
+      return new Promise((resolve, reject) => {
+        // 这是 xhr 请求后 返回的 data
+        resolve([{ v: 1 }, { v: 2 }])
+      }).then(response => response, err => err)
+      // response 是对 response 处理后的 response
+      // 后面就是响应拦截器
+    })
+    // .then(res => console.log(res))
+
+
+    // 响应拦截器了
+    response.then(resp => {
+      // ....
+    })
+
+  </script>
+</body>
+
+</html>
