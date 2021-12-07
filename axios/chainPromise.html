@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    class PromiseCollection {
+      constructor() {
+        this.handler = [];
+      }
+
+      use(resolve, reject) {
+        this.handler.push({
+          resolve,
+          reject
+        });
+      }
+    }
+
+    const promiseCollection = new PromiseCollection();
+
+    // 模拟用户使用  Interceptor.use
+    (function userUseInterceptor(len = 5) {
+      while (len--) {
+        // 用户使用
+        promiseCollection.use(function (config) {
+          config.lala = len;
+          return config;
+        }, len % 2 == 0 ? err => console.log(err) : undefined)
+      }
+    }());
+
+    // console.log(promiseCollection)
+
+    // 将用户书写的拦截器转换为一个数组
+    const transformInterceptorArr = (function transformInterceptor(promiseCollection) {
+      const temp = [];
+      promiseCollection.forEach(item => temp.push(item.resolve, item.reject));
+      return temp;
+    }(promiseCollection.handler));
+
+    // console.log(transformInterceptorArr);
+
+    const config = {
+      val: 'Hello Axios',
+      headers: {
+        a: 1
+      }
+    };
+
+    let promise = Promise.resolve(config);
+
+    while (transformInterceptorArr.length) {
+      promise = promise.then(transformInterceptorArr.shift(), transformInterceptorArr.shift());
+    }
+
+    promise.then(res => console.log(res), err => console.log(err));
+
+  </script>
+</body>
+
+</html>
