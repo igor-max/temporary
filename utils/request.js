@@ -33,7 +33,7 @@ request.interceptors.request.use(function (config) {
   } 
   return config;
 }, error => {
-  console.log(error);
+  console.log('request error:', error);
   return Promise.reject(error);
 });
 
@@ -55,7 +55,7 @@ request.interceptors.response.use(function (response) {
   }
 }, error => {
   endLoading();
-  console.log(error);
+  console.log('response error:', error);
   Message({
     message: error.message,
     type: 'error',
