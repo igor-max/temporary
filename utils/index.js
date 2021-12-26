@@ -1,3 +1,13 @@
+import * as validates from './validates';
+
+export const geneFormValidate = (key, msg) => (rule, value, cb) => {
+  if(validates[key] && validates[key](value)) {
+    cb();
+  } else {
+    cb(new Error(msg));
+  }
+};
+
 
 // form axios
 
@@ -39,3 +49,4 @@
     }
   }
 }
+
