@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <script>
-    function test(param, ...rest) {
-      console.log(rest, arguments);
-      arguments[0] = 333;
-      console.log(param)
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var test = undefined;
+      function test() {}
+      console.log(test);
 
-    test(1, 2, 3);
-  </script>
-</body>
+
+      // var a = 1234;
+      // var a = undefined;
+      // console.log(a);
+
+      /*
+      是函数
+        1. 创建argument
+        2. 找到函数声明（不会扫描这些函数体，且如果有立即执行函数也不会执行）
+        3. 找到 var 声明的变量
+        4. 找到 const let 声明的变量
+      不是函数
+
+
+
+    */
+    </script>
+  </body>
 </html>
