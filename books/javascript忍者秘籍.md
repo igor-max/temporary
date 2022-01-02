@@ -105,6 +105,27 @@ this指向由 **定义函数的位置，方式** 和 **调用函数的方式** �
 5.5. var let const
 1. const 定义的值不可重新赋值，但是对象可以添加新的属性值
 2. let, const 定义的有块级作用域(是在当前词法作用域)，var不会
-3. 变量提升
-第一阶段：JavaScript 引擎会访问并注册在当前词法环境中所声明的变量和函数
-第二阶段：具体如何执行取决于变量的类型(let、var、const 和函数声明)以及环境类型(全局环境、函数环境或块级作用域)
+3. 变量提升: JavaScript 引擎会访问并注册在当前词法环境中所声明的变量和函数(先提升函数声明，再提升变量声明，提升的变量值为undefined， let, const 定义的值不会提升)
+
+5.6 闭包工作原理
+闭包可以访问创建函数时所在作用域内的全部变量
+下面这个也是闭包
+```js
+function Test() {
+  const count = 0;
+  this.getCount = function() {
+    return count;
+  }
+  this.setCount = function() {
+    count++;
+  };
+  this.getName = function() {
+    return name;
+  }
+  const name = 'Jack';
+}
+```
+
+
+**tip**
+**词法环境 === 作用域**

@@ -8,15 +8,6 @@
   </head>
   <body>
     <script>
-      var test = undefined;
-      function test() {}
-      console.log(test);
-
-
-      // var a = 1234;
-      // var a = undefined;
-      // console.log(a);
-
       /*
       是函数
         1. 创建argument
@@ -24,10 +15,43 @@
         3. 找到 var 声明的变量
         4. 找到 const let 声明的变量
       不是函数
-
-
-
     */
+
+      // function Ninja() {
+      //   var feints = 0;
+      //   this.getFeints = function () {
+      //     return feints;
+      //   };
+      //   this.feint = function () {
+      //     feints++;
+      //   };
+      // }
+      // var ninja1 = new Ninja();
+      // console.log(ninja1)
+
+      function Test() {
+        let gender = 'female';
+        this.getGender = function() {
+          return {
+            gender,
+            lala
+          };
+        }
+
+        this.setGender = function() {
+          gender = gender === 'female' ? 'male' : 'female';
+        }
+
+        const lala = 'I am lala';
+      }
+
+      const t = new Test();
+
+      console.log(t.getGender());
+
+
+
+
     </script>
   </body>
 </html>
