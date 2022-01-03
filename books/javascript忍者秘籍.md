@@ -124,6 +124,10 @@ function Test() {
   }
   const name = 'Jack';
 }
+
+const obj = { count: 333 };
+const t = Test();
+console.log(t.getCount(), t.getName());
 ```
 
 

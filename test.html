@@ -9,48 +9,13 @@
   <body>
     <script>
       /*
-      是函数
-        1. 创建argument
-        2. 找到函数声明（不会扫描这些函数体，且如果有立即执行函数也不会执行）
-        3. 找到 var 声明的变量
-        4. 找到 const let 声明的变量
-      不是函数
-    */
-
-      // function Ninja() {
-      //   var feints = 0;
-      //   this.getFeints = function () {
-      //     return feints;
-      //   };
-      //   this.feint = function () {
-      //     feints++;
-      //   };
-      // }
-      // var ninja1 = new Ninja();
-      // console.log(ninja1)
-
-      function Test() {
-        let gender = 'female';
-        this.getGender = function() {
-          return {
-            gender,
-            lala
-          };
-        }
-
-        this.setGender = function() {
-          gender = gender === 'female' ? 'male' : 'female';
-        }
-
-        const lala = 'I am lala';
-      }
-
-      const t = new Test();
-
-      console.log(t.getGender());
-
-
-
+        是函数
+          1. 创建argument
+          2. 找到函数声明（不会扫描这些函数体，且如果有立即执行函数也不会执行）
+          3. 找到 var 声明的变量
+          4. 找到 const let 声明的变量
+        不是函数
+      */
 
     </script>
   </body>
