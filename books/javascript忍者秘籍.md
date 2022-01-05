@@ -133,3 +133,45 @@ console.log(t.getCount(), t.getName());
 
 **tip**
 **词法环境 === 作用域**
+
+
+## 第七章: 面向对象和原型
+
+```function foo () {}```
+1. 每一个函数都具有一个原型对象。  foo.prototype is object 
+2. 每一个函数的原型都具有一个 constructor 属性，该属性指向函数本身。 foo.prototype.constructor === foo
+3. constructor 对象的原型设置为新创建的对象的原型。 foo.prototype.constructor.prototype = { age: 11 };  const o = new foo(); 即 o.__proto__ = { age: 11 };
+
+**在创建实例之后修改构造函数的原型, 实例的__proto__还是之前的原型, example:**
+```js
+function test() { }
+test.prototype.name = 'Jack';
+test.prototype.sayName = function () {
+  return this.name;
+};
+
+const t = new test();
+console.log(t.name, t.age);  // Jack undefined
+
+test.prototype = {
+  age: 11,
+  getAge() {
+    return this.age;
+  }
+}
+
+console.log(t.name, t.age);  // Jack undefined
+// 这里虽然改变了原型,但是**修改原型是在创建实例只会修改的**,所以还是指向原来的原型
+// 这样设计很合理, 因为修改原型后不能影响前面的代码
+
+const t2 = new test();
+console.log(t2.name, t2.age);  // 11 undefined
+```
+
+constructor: 可用于对象获取自身的构造函数,
+
+```js
+function Test() {}
+const t = new Test();
+const t2 = new t.constructor();  // 不需要知道构造函数是谁,就可以创建实例(在某些情况下非常有用)
+```
