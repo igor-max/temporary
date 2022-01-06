@@ -1,22 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      /*
-        是函数
-          1. 创建argument
-          2. 找到函数声明（不会扫描这些函数体，且如果有立即执行函数也不会执行）
-          3. 找到 var 声明的变量
-          4. 找到 const let 声明的变量
-        不是函数
-      */
 
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function Animal() {}
+
+    // function Dog() {}
+
+    // Dog.prototype = new Animal();   // 不建议 Dog.prototype = Animal.prototype (这样他们是同一个对象,更改一个会影响另一个)
+
+    // const dog = new Dog();  
+    // // dog instance Dog ????    
+    // console.log(dog instanceof Dog, dog instanceof Animal,  dog.constructor === Animal); // all true
+
+    // function Animal() { this.name = 'Frank' }
+
+    // function Dog() { }
+    // Dog.prototype = new Animal();   
+    // Dog.prototype.sayName = function() { };
+    // Object.defineProperty(Dog.prototype, 'constructor', {
+    //   enumerable: false,
+    //   value: Dog
+    // })
+    // const dog = new Dog();
+    // console.log(dog);
+    // console.log(dog instanceof Dog); 
+    // console.log(dog instanceof Animal);
+    // console.log(dog.constructor === Dog); 
+    // console.log(dog.constructor === Animal);
+
+    // console.log(123);
+
+    /*
+      修改子项不影响父项(用个中间层过度)
+      父项是共享的,不能执行多次(不能每创建一个函数就执行fun.call一次)
+      创建子类能够向父类传递参数
+    */
+
+    // 原型链继承(继承了太多无用的属性)
+    // {
+    //   function Grand() {}
+    //   const grand = new Grand();
+
+    //   Father.prototype = grand;
+    //   function Father() {}
+    //   const father = new Father();
+    //   Son.prototype = father;
+    //   function Son() {}
+    //   console.log(new Son())
+    // }
+    // call, 实际上算不上继承,虽然代码少写了,但是每次都会执行Father函数
+    // {
+    //   function Father(name, age) {
+    //     this.name = name;
+    //     this.age = age;
+    //   }
+    //   function son(name, age, sex) {
+    //     Father.call(this, name, age, sex);
+    //     this.sex = sex;
+    //   }
+    // }
+
+    // // share prototype(修改子项会影响父项)
+    // {
+    //   function Father() {}
+    //   function Son() {} 
+    //   Son.prototype = Father.prototype;
+    // }
+
+    // {
+    //   function Father(sex) {
+    //   }
+    //   F.prototype = Father.prototype;
+    //   function F() {}
+    //   const f = new F();
+    //   f.constructor = Son;
+    //   Son.prototype = f;
+    //   function Son() {} 
+    //   const son = new Son();
+    //   const father = new Father();
+
+    //   const inherit = (function() {
+    //     const Temp = function() {};
+    //     return function(target, origin) {
+    //       Temp.prototype = origin.prototype;
+    //       target.prototype = new Temp();
+    //     };
+    //   }());
+    // }
+
+
+    // {
+    //   Father.prototype.count = 0;
+    //   function Father() {}
+    //   const father = new Father();
+    //   Son.prototype = father;
+    //   function Son() {}
+
+    //   const son = new Son();
+    //   son.count = 123;
+    //   console.log( son );
+    // }
+
+
+
+    // {
+    //   class Test {
+    //     constructor(name) {
+    //       this.name = name;
+    //     }
+
+    //     sayName() {
+    //       return this.name;
+    //     }
+
+    //     static lala() {
+    //       return 'lala';
+    //     }
+    //   }
+
+    //   const test = new Test('Tom');
+    //   console.log(test);
+    //   Test.lala()
+    // }
+
+    {
+
+      class Father {
+        constructor(name) {
+          this.name = name;
+        }
+
+        getFather() { }
+      }
+
+      class Son extends Father {
+        constructor(name, age) {
+          super(name);
+          this.age = age;
+        }
+
+        getSon() { }
+      }
+
+      const son = new Son('Jack', 11);
+      console.log(son)
+
+    }
+
+
+    {
+      function inherit(target, origin) {
+        function F() { }
+        F.prototype = new origin();
+        F.prototype.constructor = target;
+        target.prototype = new F();
+      }
+
+      inherit(Son, Father);
+
+      Father.prototype.getFather = function () { }
+      function Father(name) { this.name = name }
+      Son.prototype.getSon = function () { }
+      function Son(name, age) { Father.call(this, name); this.age = age; }
+
+     
+
+      const son = new Son('Jack', 11);
+      console.log(son);
+    }
+  </script>
+</body>
+
 </html>

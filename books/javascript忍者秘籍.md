@@ -175,3 +175,21 @@ function Test() {}
 const t = new Test();
 const t2 = new t.constructor();  // 不需要知道构造函数是谁,就可以创建实例(在某些情况下非常有用)
 ```
+
+A instanceof B (A的原型链上有B的原型 A.__proto__ 有 B.prototype) 
+```js
+function Test() { };
+const test = new Test();
+console.log((test instanceof Test));  // true
+Test.prototype = {};  // 这是在 new Test 之后改变的，father实际上还是 instanceof 改变前的原型 
+console.log((test instanceof Test));  // false 
+```
+
+```js
+function Father() {}
+Son.prototype = new Father();
+Son.prototype.constructor = Son;
+function Son() {}
+const son = new Son();
+console.log(son instanceof Son, son instanceof Father); // true true
+```
