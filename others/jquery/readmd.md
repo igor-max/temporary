@@ -121,3 +121,26 @@ console.log('=====');
 console.log(obj, _.data(obj, 'lala'));
 ```
 
+
+
+# other 
+
+**end and addBack(对链式操作的优化)**
+
+1. jQuery 是一个伪数组，就要实现 **数组的** 方法，
+2. jQuery 是一个元素集合，就要实现 **操作元素** 的方法
+
+- get(num)， 对负数下标的封装，返回真实 DOM（），jQury 对象存储了真实 dom
+- eq， 返回 jQuery dom，使用 pushStack 封装了一下
+- first -> eq(1)
+- last -> eq(-1)
+- slice，对一组 dom 进行 jQuery 化
+
+高层 API（开发者使用）
+
+- 中间可能还会有再对底层 API 对使用 -
+  底层 API（高层 API 使用）
+
+函数重载
+
+1. 实现 -> 先对参赛统一处理，在调用 API -》 co 库（统一 promise 化）
