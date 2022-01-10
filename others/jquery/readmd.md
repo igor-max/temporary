@@ -1,3 +1,4 @@
+
 ## 回调函数
 
 **$.Callbacks** -> 观察者模式 add fire(trigger) remove
@@ -124,6 +125,14 @@ console.log(obj, _.data(obj, 'lala'));
 
 
 # other 
+
+
+1. 闭包隐藏变量，传入window减少作用域查找 解决undefined问题
+1. prototype 
+2. jQuery.exend = jQuery.prototype.extend   (通过this)
+3. $(xxx) -> 方法重载
+4. 链式调用  -> 优缺点
+5. 变量冲突 noConflict
 
 **end and addBack(对链式操作的优化)**
 
