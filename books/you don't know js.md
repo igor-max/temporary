@@ -34,3 +34,52 @@ Object.freeze() ->  在Object.seal的基础上设置 writable: false
 - obj.propertyIsEnumerable   boolean 是否是可enum的
 - Object.keys() 只能遍历非原型链且 enumerable 为 true 的属性
 - Object.getOwnPropertyNames(obj)   只能遍历非原型的所有属性（返回值是一个数组）
+
+
+
+
+
+  /*
+      自身 不存在 foo属性 ，原型存在
+      
+      1. 原型 没有 设置 writable: false, 则会在该对象中添加屏蔽属性 foo
+      2. 原型 有 设置 writable: false, 则添加无效，且严格模式下会报错
+      3. 原型 有 且是一个 setter，就会调用该 setter，但不会将 foo 属性添加到 该对象上
+
+      通过 Object.defineProperty 可以解决 2， 3 的问题
+
+      第二点为什么会这样：可以看作模拟类的继承（复制），所以也是只读的，但是实际上不会发生复制，JS语言设计有很多奇怪的问题
+    */
+
+    /*
+      类是将对象复制：js是将对象关联
+      js把这种叫做继承（或原型继承），但继承应该是对象复制，而不是对象关联
+      继承意味着复制操作，JS是在两个对象之间创建一个关联，通过委托访问另一个对象的属性和函数
+
+
+      构造函数当且仅当调用的时候才是构造函数
+    */
+
+    function Foo() {}
+    function Bar() {}
+
+    // Bar.prototype = Foo.prototype  直接 new Foo 就行了
+    // Bar.prototype = new Foo()  // foo实例不能有副作用，要不然会影响Bar实例
+    // Bar.prototype = Object.create(Foo.prototype)  // 会创建一个新对象（推荐）
+    Object.setPrototypeOf(Bar.prototype, Foo.prototype);  // es6 不会创建新对象，且 constructor 也指向正确 （更推荐）
+
+    console.log(new Bar());
+
+    /*
+      A instanceof B   对象A的原型链中是否指向 函数 B 的prototype  
+    
+    */
+
+
+    /*
+      读JS面向对象的理解
+        1. 对象与对象之间的引用关系  [[GET]]  [[SET]]
+        2. new 引用  Object.create 引用   Object.setPrototype 引用
+        3. 多态
+    */
+    
