@@ -1,22 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  <body>
+    <!-- <script>
+      function Father(name) {
+        this.name = name;
+      }
 
-<body>
-  <script>
-    /*
-      监听对象的状态： 应用：日志记录、检测性能 数据校验、定义计算属性值
-    */
+      function Son(name, age) {
+        Father.call(this, name);
+        this.age = age;
+      }
 
-    // 闭包 || getter setter
+      // Object.setPrototypeOf(Son.prototype, Father.prototype);
+      // Son.prototype.getSon = function() {}
+      // Father.prototype.getFather = function() {}
 
-  </script>
-</body>
+      function inherit(target, origin) {
+        function Fun() {}
+        Fun.prototype = origin.prototype;  // 目的就是提供一个空对象
+        const fun = new Fun();
+        target.prototype = fun;
+        Object.defineProperty(target.prototype, 'constructor', {
+          value: target,
+          enumerable: false,
+        });
+      }
 
+      // Son.prototype = Object.create(Father.prototype);
+      inherit(Son, Father);
+      Object.defineProperty(Son.prototype, 'constructor', {
+        value: Son,
+        enumerable: false,
+      });
+      Son.prototype.getSon = function () {};
+      Father.prototype.getFather = function () {};
+
+      const son = new Son('Jack', 11);
+      console.log(son);
+
+      // 原型链继承（父级函数中的this放在了原型上，存在被改的可能）
+
+      // 放在实例上，原型链还是要指向正确
+    </script> -->
+  
+    <script>
+      Father.prototype.sayFather = function() {}
+      function Father(name) {
+        this.name = name;
+      } 
+
+      function Son(name, age) {
+        Father.call(this, name);
+        this.age = age;
+      } 
+      
+      function Test() {
+
+      }
+      Test.prototype = Father.prototype;
+      
+      Son.prototype = new Test();
+      Son.prototype.constructor = Son;
+      Son.prototype.saySon = function() {};
+      const son = new Son('Jack', 11);
+    </script>
+  
+  </body>
 </html>
