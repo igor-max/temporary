@@ -49,28 +49,106 @@
 
       // 放在实例上，原型链还是要指向正确
     </script> -->
-  
+
     <script>
-      Father.prototype.sayFather = function() {}
-      function Father(name) {
-        this.name = name;
-      } 
-
-      function Son(name, age) {
-        Father.call(this, name);
-        this.age = age;
-      } 
-      
-      function Test() {
-
+      // 链表在 while 循环的时候不能用 current， 而是用 current.next 作判断
+      class Node {
+        constructor(element) {
+          this.element = element;
+          this.next = null;
+        }
       }
-      Test.prototype = Father.prototype;
+
+      class LinkedList {
+        constructor() {
+          this.head = null;
+          this.length = 0;
+        }
+
+        get(pos) {
+          if (pos < 0 || pos >= this.length) return;
+        }
+
+        append(ele) {
+          const node = new Node(ele);
+          let current = this.head;
+          if (!current) {
+            this.head = node;
+          } else {
+            while (current.next) {
+              current = current.next;
+            }
+            current.next = node;
+          }
+          this.length++;
+        }
+
+        insert(ele, pos) {
+          if (pos < 0 || pos > this.length) return;
+          const node = new Node(ele);
+          let current = this.head;
+          if (!pos) {
+            // head insert
+            node.next = head;
+            this.head = node;
+          } else {
+            while (--pos) {
+              current = current.next;
+            }
+            node.next = current.next;
+            current.next = node;
+          }
+          this.length++;
+        }
+
+        remove(ele) {
+          let current = this.head,
+            flag = true; // 减少循环使用
+          if (current.element === ele) {
+            this.head = null;
+            this.flag = false;  // 如果下面的else没找到，讲flag设置为falg，表示找到了，用这个判断要不要length-1
+          } else {
+            while (current.next && flag) {
+              if (current.next.element === ele) {
+                current.next = current.next.next;
+                flag = false;
+              }
+              current = current.next; // 后面再重新分配，因为要拿到前一个元素
+            }
+          }
+          if (!this.flag) {
+            this.length--;
+          }
+        }
+
+        site() {
+          return this.length;
+        }
+      }
+
+      const list = new LinkedList();
+
+      list.append(1);
+      list.append(2);
+      list.append(3);
+      list.append(4);
+      list.append(5);
+
+      list.insert('a', 2);
+
+      list.remove(4);
+
+      console.log(list);
+
+
+      /*
+        出行： 6 * 30 = 180 == 200
+        吃饭： 40 * 30 = 1200
+        住：   600    
+
+        total： 2000
       
-      Son.prototype = new Test();
-      Son.prototype.constructor = Son;
-      Son.prototype.saySon = function() {};
-      const son = new Son('Jack', 11);
+      */
     </script>
-  
   </body>
 </html>
