@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const treeData = [
+    //   {
+    //     id: 1,
+    //     title: "课程1",
+    //     children: [
+    //       { id: 4, title: "课程1-1" },
+    //       {
+    //         id: 5,
+    //         title: "课程1-2",
+    //         children: [
+    //           { id: 6, title: "课程1-2-1" },
+    //           { id: 7, title: "课程1-2-2" },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    //   { id: 2, title: "课程2" },
+    //   { id: 3, title: "课程3" },
+    // ];
+
+    // function treeToFlat(data, parentId) {
+    //   let temp = [];
+    //   data.forEach(item => {
+    //     temp.push({
+    //       id: item.id,
+    //       title: item.title,
+    //       parentId: parentId
+    //     });
+    //     if (item.children) {
+    //       temp = temp.concat(treeToFlat(item.children, item.id));
+    //     }
+    //   });
+    //   return temp;
+    // }
+    // console.log(treeToFlat(treeData));
+
+    const flatData = [
+      { id: 1, parent: 0, title: "课程1" },
+      { id: 4, parent: 1, title: "课程1-1" },
+      { id: 5, parent: 1, title: "课程1-2" },
+      { id: 6, parent: 5, title: "课程1-2-1" },
+      { id: 7, parent: 5, title: "课程1-2-2" },
+      { id: 2, parent: 0, title: "课程2" },
+      { id: 3, parent: 0, title: "课程3" },
+    ]
+
+    function flatToTree(data) {
+      let temp = [];
+      flatData.forEach(item => {
+        if (!item.parent) temp.push(item);
+        else {
+          const parnent = data.find(v => v.id === item.parent);
+          parnent && (parnent.children || (parnent.children = [])).push(item);
+        }
+      });
+      return temp;
+    }
+
+    console.log(flatToTree(flatData));
+  </script>
+</body>
+
+</html>
