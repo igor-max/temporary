@@ -1,3 +1,5 @@
+## copy
+
 ```js
 directives = {
   copy: {
@@ -31,6 +33,66 @@ directives = {
     },
     unbind(el) {
       el.removeEventListener('click', el.handler);
+    },
+  },
+};
+```
+
+## drag
+
+```js
+directions = {
+  drag: {
+    // https://juejin.cn/post/6844903958633267208
+    bind(el) {
+      const dialogWrap = el.querySelector('.el-dialog'),
+        dialogHeader = dialogWrap.querySelector('.el-dialog__header'); // 获取 dialog header
+      dialogHeader.style.cursor = 'move'; // 鼠标手型
+
+      dialogHeader.onmousedown = function (e) {
+        // 记录按下时鼠标的坐标和目标元素的 left、top 值
+        const currentX = e.clientX;
+        const currentY = e.clientY;
+        const left = dialogHeader.offsetLeft;
+        const top = dialogHeader.offsetTop;
+
+        document.onmousemove = function (e) {
+          // 鼠标移动时计算每次移动的距离，并改变拖拽元素的定位
+          const disX = e.clientX - currentX;
+          const disY = e.clientY - currentY;
+
+          let curX = left + disX;
+          // curX = curX < 0 ? 0 : curX;
+          let curY = top + disY;
+          // curY = curY > 400 ? 400 : curY;
+
+          dialogWrap.style.left = `${curX}px`;
+          dialogWrap.style.top = `${curY}px`;
+
+          // 阻止事件的默认行为，可以解决选中文本的时候拖不动
+          return false;
+        };
+
+        // 鼠标松开时，拖拽结束
+        document.onmouseup = () => {
+          document.onmousemove = null;
+          document.onmouseup = null;
+        };
+      };
+    },
+    // 每次重新打开 dialog 时，要将其还原
+    update(el, binding, { context }) {
+      context.$nextTick(() => {
+        // $nextTick 无效，还是会有闪动效果
+        const dialogWrap = el.querySelector('.el-dialog');
+        dialogWrap.style.left = '';
+        dialogWrap.style.top = '';
+      });
+    },
+
+    unbind(el) {
+      const dialogHeader = el.querySelector('.el-dialog__header');
+      dialogHeader.onmousedown = null;
     },
   },
 };
