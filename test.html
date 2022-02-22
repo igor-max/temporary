@@ -5,9 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .test {
+        width: 500px;
+        height: 300px;
+        line-height: 300px;
+        text-align: center;
+        border: 1px solid #000;
+      }
+    </style>
   </head>
 
   <body>
+    <div class="test" id="test"></div>
+    <button id="btn">cancel</button>
+    <script>
+     
+    </script>
+
     <!-- <script>
       function Father(name) {
         this.name = name;
@@ -106,7 +126,7 @@
             flag = true; // 减少循环使用
           if (current.element === ele) {
             this.head = null;
-            this.flag = false;  // 如果下面的else没找到，讲flag设置为falg，表示找到了，用这个判断要不要length-1
+            this.flag = false; // 如果下面的else没找到，讲flag设置为falg，表示找到了，用这个判断要不要length-1
           } else {
             while (current.next && flag) {
               if (current.next.element === ele) {
@@ -139,7 +159,6 @@
       list.remove(4);
 
       console.log(list);
-
 
       /*
         出行： 6 * 30 = 180 == 200
